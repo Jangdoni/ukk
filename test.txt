@@ -24,13 +24,13 @@
 /sys log add action=disk prefix=log ;
 
 /ip fire add add list=blok address=linux.org ;
-/ip fire  filter add chain=forward dst-address-list=blok action=drop;
+/ip fire  filter add chain=forward in-interface=wlan1 dst-address-list=blok action=drop;
 
 /sys ntp client set enabled=y;
 
 /ip proxy set enabled=y cache-administrator=Doni@smkbbm.sch.id cache-on-disk=y;
 /ip proxy access add path=*.mp3 action=deny;
 /ip proxy access add path=*.mkv action=deny;
-/ip fire nat add chain=dstnat protocol=tcp dst-port=80 action=redirect to-ports=8080 ;
+/ip fire nat add chain=dstnat protocol=tcp dst-port=80 in-interface=wlan1 action=redirect to-ports=8080 ;
 
 /ip fire filter add chain=forward in-interface=wlan1 time=!7h-16h,sat,mon,sun,thu,tue,wed,fri action=drop protocol=!icmp ;
